@@ -57,3 +57,18 @@ section{
     font-weight: bold;
 }
 
+.questions{
+    padding: 100px;
+}
+
+#timer{
+    justify-content: right;
+
+}
+
+footer{
+    width: 100%;
+    justify-content: left;
+    color: var(--tertiary);
+}
+
