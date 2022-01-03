@@ -91,4 +91,7 @@ footer{
     height: 200px;
     margin-top: 40px;
   }
+  #buttons{
+      opacity: 1;
+  }
 

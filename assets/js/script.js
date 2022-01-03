@@ -8,7 +8,7 @@ var slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
 function timer(totalTime){
-    var timeLeft = 60;
+    var timeLeft = 5;
     var timeInterval = setInterval(function(){
         if(timeLeft > 1){
             timerEl.textContent = timeLeft + " seconds remaining";
@@ -34,7 +34,7 @@ function quizBuilder(){
         for(letter in currentQuestion.answers){
             answers.push(
                 `<label>
-                <input type = "radio" onclick = "finalResults()" name="questions${questionNumber}" value="${letter} id = userChoice">
+                <input type = "radio" onclick = "finalResults()" name="questions${questionNumber}" value="${letter}">
                ${letter} : ${currentQuestion.answers[letter]}
                 </label>
                 <button id = "previous">Previous Question</button>  
@@ -46,13 +46,14 @@ function quizBuilder(){
             `<div class = "slide">
             <div class = "questions">${currentQuestion.question}</div>
             <div class = "answers">${answers.join('')}</div>
-            </div>`
+            </div>
+            <script id = "buttons">previousButton.addEventListener("click", showPrevousSlide);
+            nextButton.addEventListener("click", showNextSlide);</script>`
         )
         
     })
     quizContainer.innerHTML = output.join('');
-    previousButton.addEventListener("click", showPrevousSlide);
-    nextButton.addEventListener("click", showNextSlide);
+    
 }
 
 
