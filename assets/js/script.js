@@ -2,11 +2,13 @@
 var timerEl = document.querySelector('#timer');
 var timeDis = document.querySelector('#str-btn');
 const quizContainer = document.getElementById('quiz')
-const resultContainer = document.getElementById('results')
+var previousButton = document.getElementById("previous");
+var nextButton = document.getElementById("next");
+var slides = document.querySelectorAll(".slide");
+let currentSlide = 0;
 
 function timer(totalTime){
     var timeLeft = 60;
-    console.log("it gets to here");
     var timeInterval = setInterval(function(){
         if(timeLeft > 1){
             timerEl.textContent = timeLeft + " seconds remaining";
@@ -32,58 +34,79 @@ function quizBuilder(){
         for(letter in currentQuestion.answers){
             answers.push(
                 `<label>
-                <input type = "radio" onclick = "finalResults('b')" name="questions${questionNumber}" value="${letter}" id = "submit">
-                ${currentQuestion.answers[letter]}
-               
-                </label>`
+                <input type = "radio" onclick = "finalResults()" name="questions${questionNumber}" value="${letter} id = userChoice">
+               ${letter} : ${currentQuestion.answers[letter]}
+                </label>
+                <button id = "previous">Previous Question</button>  
+                <button id = "next">Next Question</button>`
+                +console.log('#userChoice')
             )
         }
         output.push(
-            `<div class = "questions">${currentQuestion.question}</div>
-            <div class = "answers">${answers.join('')}</div>`
+            `<div class = "slide">
+            <div class = "questions">${currentQuestion.question}</div>
+            <div class = "answers">${answers.join('')}</div>
+            </div>`
         )
         
     })
     quizContainer.innerHTML = output.join('');
+    previousButton.addEventListener("click", showPrevousSlide);
+    nextButton.addEventListener("click", showNextSlide);
 }
 
 
 const quizQuestions = [
     {
-    question:"asdjhfasdjhfaslNEW ONE",
+    question:"Who created Javascript?",
     answers:{
-        a:"asdfasdf",
-        b:"sdfasdfa",
-        c:"asdfasdf",
-        d:"sdfasdfas",
+        a:"Brendan Eich",
+        b:"Elon Musk",
+        c:"Jesus",
+        d:"Alfred Pennyworth",
 
     },
     correctAnswer: "a"
+    },
+
+    {question: "who is the most powerful muffin?",
+        answers:{
+            a:"muffin",
+            b:"greatwich",
+            c:"broadsword",
+            d:"chocolet"
+        },
+        correctAnswer: "d"
+    
     }
 ];
 
 function finalResults(){
-    const answerContainers = quizContainer.querySelectorAll('.answers');
+  var answerContainers = quizContainer.querySelectorAll('.answers');
+  var userAnswer = '';
+  var numCorrect = 0;
 
-    let numCorrect = 0;
+console.log(userAnswer);
+}
+function showSlide(n){
+    $(slides[currentSlide]).remove('active-slide');
+    $(slides[n]).add('active-slide');
+    currentSlide = n;
+    if(currentSlide ===0){
+        previousButton.style.display = 'none';
+    }else{
+        previousButton.style.display = 'inline-block';
+    }
+    if(currentSlide === slides.length-1){
+        nextButton.style.display = 'none';
+    }
+}
 
-    quizQuestions.forEach((currentQuestion, questionNumber)=>{
-        const answerContainer = answerContainers[questionNumber];
-        const selector = `input[name = question${questionNumber}] : checked`;
-        const userAnswer = (answerContainer.querySelector(selector)|| {}).value;
-
-        if(userAnswer === currentQuestion.correctAnswer){
-            numCorrect++;
-            console.log("this is correct");
-            answerContainers[questionNumber].style.color = 'green';
-        }
-        else{
-            console.log("this is incorrect");
-            answerContainers[questionNumber].style.color = 'red'
-        }
-    })
-
-    resultContainer.innerHTML = `${numCorrect} out of ${quizQuestions.length}`;
+function showNextSlide(){
+    showSlide(currentSlide + 1);
+}
+function showPrevousSlide(){
+    showSlide(currentSlide -1);
 }
 
 timeDis.addEventListener('click',function(){
@@ -91,6 +114,10 @@ timeDis.addEventListener('click',function(){
     $('.title').remove();
     $('.hero').remove();
     quizBuilder();
+    
 });
+
+
+
 
 
