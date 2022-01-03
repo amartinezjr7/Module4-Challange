@@ -41,9 +41,9 @@ function quizBuilder(){
                 <button id = "next">Next Question</button>`
                 +console.log('#userChoice')
             )
-        }
+        }//I initially had the class = slides in order to try and transition the slides but i couldn't get it to work
         output.push(
-            `<div class = "slide">
+            `<div>
             <div class = "questions">${currentQuestion.question}</div>
             <div class = "answers">${answers.join('')}</div>
             </div>
@@ -70,12 +70,12 @@ const quizQuestions = [
     correctAnswer: "a"
     },
 
-    {question: "who is the most powerful muffin?",
+    {question: "What method would you use to add HTML with JS?",
         answers:{
-            a:"muffin",
-            b:"greatwich",
-            c:"broadsword",
-            d:"chocolet"
+            a:"add.HTML",
+            b:"push.HTML",
+            c:"get.HTML",
+            d:".innerHTML"
         },
         correctAnswer: "d"
     
